@@ -5,57 +5,53 @@
 //  Created by Spencer Marks on 6/27/24.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
+
+var dateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MM-dd"
+    return formatter
+}()
+
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
-
+    @Environment(\.dismiss) var dismiss
+    @State var showingAddEntry: Bool = false
+    @State var showingSettings: Bool = false
+    @Query private var activities: [ActivityModel]
+    
     var body: some View {
-        NavigationSplitView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                    } label: {
-                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+        NavigationStack {
+            
+                List(activities) { item in
+                    Text(item.amount)
+                
+            }.navigationTitle("iEat")
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showingAddEntry = true
+                        } label: {
+                            Image(systemName: "plus")
+                        }
                     }
-                }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            showingSettings = true
+                        } label: {
+                            Image(systemName: "gear")
+                        }
                     }
+                }.sheet(isPresented: $showingAddEntry) {
+                    Button("Add Activity") {
+                        let activity:ActivityModel = ActivityModel()
+                        modelContext.insert(activity)
+                    }
+                }.sheet(isPresented: $showingSettings) {
+                     
                 }
-            }
-        } detail: {
-            Text("Select an item")
         }
     }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
-            }
-        }
-    }
-}
-
-#Preview {
-    ContentView()
-        .modelContainer(for: Item.self, inMemory: true)
 }
