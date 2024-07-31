@@ -18,10 +18,14 @@ var dateFormatter: DateFormatter = {
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
+    let activityEditor = ActivityEditor()
+
     @State var showingAddEntry: Bool = false
     @State var showingSettings: Bool = false
     @Query private var activities: [ActivityModel]
+
     
+
     var body: some View {
         NavigationStack {
             
@@ -45,13 +49,16 @@ struct ContentView: View {
                         }
                     }
                 }.sheet(isPresented: $showingAddEntry) {
-                    Button("Add Activity") {
+                /*    Button("Add Activity") {
                         let activity:ActivityModel = ActivityModel()
                         modelContext.insert(activity)
                     }
+                 */
+                    activityEditor
                 }.sheet(isPresented: $showingSettings) {
                      
                 }
         }
     }
 }
+

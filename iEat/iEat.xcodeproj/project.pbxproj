@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		22726ED82C5934AF00E735F7 /* ActivityEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22726ED72C5934AF00E735F7 /* ActivityEditorView.swift */; };
 		22B581292C2DD904004A957B /* iEatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B581282C2DD904004A957B /* iEatApp.swift */; };
 		22B5812B2C2DD904004A957B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5812A2C2DD904004A957B /* ContentView.swift */; };
 		22B5812D2C2DD904004A957B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B5812C2C2DD904004A957B /* Item.swift */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		22726ED72C5934AF00E735F7 /* ActivityEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEditorView.swift; sourceTree = "<group>"; };
 		22B581252C2DD904004A957B /* iEat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iEat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		22B581282C2DD904004A957B /* iEatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iEatApp.swift; sourceTree = "<group>"; };
 		22B5812A2C2DD904004A957B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,6 +102,7 @@
 			children = (
 				22B5812E2C2DD906004A957B /* Assets.xcassets */,
 				22B5812A2C2DD904004A957B /* ContentView.swift */,
+				22726ED72C5934AF00E735F7 /* ActivityEditorView.swift */,
 				22B581282C2DD904004A957B /* iEatApp.swift */,
 				22B5812C2C2DD904004A957B /* Item.swift */,
 				22B5A26B2C34303B003D6F4D /* Model */,
@@ -282,6 +285,7 @@
 				22B5A26E2C34310D003D6F4D /* ActivityModel.swift in Sources */,
 				22B5812B2C2DD904004A957B /* ContentView.swift in Sources */,
 				22B5812D2C2DD904004A957B /* Item.swift in Sources */,
+				22726ED82C5934AF00E735F7 /* ActivityEditorView.swift in Sources */,
 				22B581292C2DD904004A957B /* iEatApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

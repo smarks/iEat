@@ -9,20 +9,22 @@ import Foundation
 import SwiftData
 import SwiftUI
 
-enum ActivityType: Codable {
+enum ActivityType: String, Codable, CaseIterable, Identifiable  {
     case eat
     case exercise
+    var id: Self { self }
 }
 
-enum Mood: Codable {
+enum Mood: String, Codable, CaseIterable, Identifiable  {
     case sader
     case sad
     case netural
     case happy
     case happier
+    var id: Self { self }
 }
 
-enum EmotionalInflunce: Codable {
+enum EmotionalInflunce: String, Codable, CaseIterable, Identifiable  {
     /* You ate for emotional reasons at a time when you would not have otherwise been eating
        You ate a particular food for emotional reasons that you would not have otherwise eaten
        You ate more food than you would have otherwise eaten, for an emotional reason.
@@ -31,18 +33,20 @@ enum EmotionalInflunce: Codable {
     case ate_specific_food
     case ate_more
     case none
+    var id: Self { self }
 }
 
-enum Locations: Codable {
+enum Locations: String, Codable,CaseIterable, Identifiable  {
     case home_office
     case home
     case work
     case desk
     case resturant
     case dinning_room
+    var id: Self { self }
 }
 
-enum HungerScale: Codable {
+enum HungerScale: String, Codable, CaseIterable, Identifiable  {
     case starving
     case eat_anything_in_sight
     case intense
@@ -53,11 +57,13 @@ enum HungerScale: Codable {
     case full
     case uncomfortably_full
     case stuffed
+    var id: Self { self }
 }
 
 @Model
 class ActivityModel {
     var time: Date
+    var activity_description: String
     var activityType: ActivityType
     var amount: String
     var location: Locations
@@ -68,15 +74,19 @@ class ActivityModel {
     var fullness: HungerScale
 
     init(time: Date = Date(),
-         activityType: ActivityType = ActivityType.eat,
-         amount: String = "amount",
-         location: Locations = Locations.home,
-         mood: Mood = Mood.netural,
-         emotionalInflunce: EmotionalInflunce = EmotionalInflunce.none,
-         thoughts: String = "",
-         hungerScale: HungerScale = HungerScale.netural,
-         fullness: HungerScale = HungerScale.netural) {
+       
+         activity_description: String? = "description",
+                activityType: ActivityType = .eat,
+                amount: String = "amount",
+                location: Locations = .home,
+                mood: Mood = .netural,
+                emotionalInflunce: EmotionalInflunce = .none,
+                thoughts: String = "",
+                hungerScale: HungerScale = .netural,
+                fullness: HungerScale = .netural) {
+
         self.time = time
+        self.activity_description = activity_description ??  "value"
         self.activityType = activityType
         self.amount = amount
         self.location = location
