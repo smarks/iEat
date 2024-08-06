@@ -11,20 +11,7 @@ import SwiftUI
 struct ActivityEditor: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
-    @State private var activity: ActivityModel
-
-     /*
-    @State private var time: Date = activ
-    @State private var activityDescription: String = ""
-    @State private var activityType: ActivityType = .eat
-    @State private var amount: String = ""
-    @State private var location: Locations = .home
-    @State private var mood: Mood = .netural
-    @State private var emotionalInfluence: EmotionalInflunce = .none
-    @State private var thoughts: String = ""
-    @State private var hungerScale: HungerScale = .netural
-    @State private var fullness: HungerScale = .netural
- */
+    @State var activity:ActivityModel
 
     init(activity:ActivityModel){
         self.activity = activity

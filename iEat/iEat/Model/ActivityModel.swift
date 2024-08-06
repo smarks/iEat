@@ -62,6 +62,7 @@ enum HungerScale: String, Codable, CaseIterable, Identifiable {
 
 @Model
 class ActivityModel {
+    let id = UUID()
     var time: Date
     var activity_description: String
     var activityType: ActivityType
@@ -84,6 +85,7 @@ class ActivityModel {
          hungerScale: HungerScale = .netural,
          fullness: HungerScale = .netural) {
         
+
         self.time = time
         self.activity_description = activity_description ?? "value"
         self.activityType = activityType

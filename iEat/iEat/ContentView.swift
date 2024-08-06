@@ -8,17 +8,16 @@
 import SwiftData
 import SwiftUI
 
-var dateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateFormat = "MM-dd"
-    return formatter
-}()
+private let dateFormatter: DateFormatter = {
+       let formatter = DateFormatter()
+       formatter.dateStyle = .short
+       formatter.timeStyle = .short
+       return formatter
+   }()
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-    let activityEditor = ActivityEditor(activity: ActivityModel())
-
     @State var showingAddEntry: Bool = false
     @State var showingSettings: Bool = false
     @Query private var activities: [ActivityModel]
@@ -27,8 +26,7 @@ struct ContentView: View {
         NavigationStack {
             List {
                 ForEach(activities) { item in
-                    Text(item.activity_description)
-                    
+                    ActivitySummaryView(activity: item)
                 }.onDelete(perform: delete)
                 
             }.navigationTitle("iEat")
@@ -48,7 +46,7 @@ struct ContentView: View {
                         }
                     }
                 }.sheet(isPresented: $showingAddEntry) {
-                    activityEditor
+                    ActivityEditor(activity: ActivityModel())
                 }.sheet(isPresented: $showingSettings) {
                     SettingView(settings: Settings())
                 }
@@ -58,5 +56,16 @@ struct ContentView: View {
     func delete(at offsets: IndexSet) {
         print(offsets)
         modelContext.delete(activities[offsets.count - 1])
+    }
+}
+
+struct ActivitySummaryView : View {
+    @State var activity:ActivityModel
+    var body: some View {
+        VStack{
+            Text(dateFormatter.string(from: activity.time)).fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+            Text(activity.activity_description)
+            Text(activity.amount)
+        }
     }
 }
