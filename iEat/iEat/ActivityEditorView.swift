@@ -11,8 +11,10 @@ import SwiftUI
 struct ActivityEditor: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
+    @State private var activity: ActivityModel
 
-    @State private var time: Date = Date()
+     /*
+    @State private var time: Date = activ
     @State private var activityDescription: String = ""
     @State private var activityType: ActivityType = .eat
     @State private var amount: String = ""
@@ -22,22 +24,27 @@ struct ActivityEditor: View {
     @State private var thoughts: String = ""
     @State private var hungerScale: HungerScale = .netural
     @State private var fullness: HungerScale = .netural
+ */
 
+    init(activity:ActivityModel){
+        self.activity = activity
+    }
+    
     var body: some View {
 
         NavigationStack {
         
             Form {
                 Section(header: Text("Activity Details")) {
-                    DatePicker("Time", selection: $time, displayedComponents: .hourAndMinute)
-                    TextField("Description", text: $activityDescription)
-                    Picker("Activity Type", selection: $activityType) {
+                    DatePicker("Time", selection: $activity.time, displayedComponents: .hourAndMinute)
+                    TextField("Description", text: $activity.activity_description)
+                    Picker("Activity Type", selection: $activity.activityType) {
                         ForEach(ActivityType.allCases) { type in
                             Text(type.rawValue.capitalized).tag(type)
                         }
                     }
-                    TextField("Amount", text: $amount)
-                    Picker("Location", selection: $location) {
+                    TextField("Amount", text: $activity.amount)
+                    Picker("Location", selection: $activity.location) {
                         ForEach(Locations.allCases) { loc in
                             Text(loc.rawValue.capitalized).tag(loc)
                         }
@@ -45,26 +52,26 @@ struct ActivityEditor: View {
                 }
 
                 Section(header: Text("Emotional State")) {
-                    Picker("Mood", selection: $mood) {
+                    Picker("Mood", selection: $activity.mood) {
                         ForEach(Mood.allCases) { mood in
                             Text(mood.rawValue.capitalized).tag(mood)
                         }
                     }
-                    Picker("Emotional Influence", selection: $emotionalInfluence) {
+                    Picker("Emotional Influence", selection: $activity.emotionalInflunce) {
                         ForEach(EmotionalInflunce.allCases) { influence in
                             Text(influence.rawValue.capitalized).tag(influence)
                         }
                     }
-                    TextField("Thoughts", text: $thoughts)
+                    TextField("Thoughts", text: $activity.thoughts)
                 }
 
                 Section(header: Text("Hunger Levels")) {
-                    Picker("Hunger Scale", selection: $hungerScale) {
+                    Picker("Hunger Scale", selection: $activity.hungerScale) {
                         ForEach(HungerScale.allCases) { scale in
                             Text(scale.rawValue.capitalized).tag(scale)
                         }
                     }
-                    Picker("Fullness", selection: $fullness) {
+                    Picker("Fullness", selection: $activity.fullness) {
                         ForEach(HungerScale.allCases) { scale in
                             Text(scale.rawValue.capitalized).tag(scale)
                         }
@@ -93,25 +100,15 @@ struct ActivityEditor: View {
 
     private func saveActivity() {
         print("Activity saved")
-        let activity: ActivityModel = ActivityModel()
-        activity.activityType = activityType
-        activity.amount = amount
-        activity.emotionalInflunce = emotionalInfluence
-        activity.fullness = fullness
-        activity.hungerScale = hungerScale
-        activity.location = location
-        activity.mood = mood
-        activity.thoughts = thoughts
-        activity.time = time
-        activity.activity_description = activityDescription
-
         modelContext.insert(activity)
+        print("Saving activity")
         print(activity)
     }
 }
 
 struct ActivityEditor_Previews: PreviewProvider {
     static var previews: some View {
-        ActivityEditor()
+        let activity:ActivityModel = ActivityModel()
+        ActivityEditor(activity: activity)
     }
 }

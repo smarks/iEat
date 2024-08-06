@@ -9,6 +9,7 @@ struct IEatApp: App {
         do {
             modelContainer = try ModelContainer(for: ActivityModel.self)
         } catch {
+            // try cleaning build folder and erasing content on simulator 
             fatalError("Could not initialize ModelContainer: \(error)")
         }
     }

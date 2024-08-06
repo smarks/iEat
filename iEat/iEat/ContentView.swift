@@ -14,23 +14,22 @@ var dateFormatter: DateFormatter = {
     return formatter
 }()
 
-
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-    let activityEditor = ActivityEditor()
+    let activityEditor = ActivityEditor(activity: ActivityModel())
 
     @State var showingAddEntry: Bool = false
     @State var showingSettings: Bool = false
     @Query private var activities: [ActivityModel]
 
-    
-
     var body: some View {
         NavigationStack {
-            
-                List(activities) { item in
-                    Text(item.amount)
+            List {
+                ForEach(activities) { item in
+                    Text(item.activity_description)
+                    
+                }.onDelete(perform: delete)
                 
             }.navigationTitle("iEat")
                 .toolbar {
@@ -49,16 +48,15 @@ struct ContentView: View {
                         }
                     }
                 }.sheet(isPresented: $showingAddEntry) {
-                /*    Button("Add Activity") {
-                        let activity:ActivityModel = ActivityModel()
-                        modelContext.insert(activity)
-                    }
-                 */
                     activityEditor
                 }.sheet(isPresented: $showingSettings) {
-                     
+                    SettingView(settings: Settings())
                 }
         }
     }
-}
 
+    func delete(at offsets: IndexSet) {
+        print(offsets)
+        modelContext.delete(activities[offsets.count - 1])
+    }
+}
